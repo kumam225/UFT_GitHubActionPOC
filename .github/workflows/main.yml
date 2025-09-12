@@ -1,0 +1,25 @@
+name: Run UFT Script
+
+on:
+  push:
+    branches:
+      - main  # or your desired branch
+  workflow_dispatch:  # allows manual trigger from GitHub UI
+
+jobs:
+  run-uft:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run UFT Test
+        shell: powershell
+        run: |
+          # Set path to UFT executable and your test script
+          $uftPath = "C:\Program Files (x86)\OpenText\UFT One\bin\UFT.exe"
+          $testPath = "${{ github.workspace }}\UFTIntegrations_ALM_GitHub1"
+
+          # Launch UFT and run the test
+          & $uftPath -run -test $testPath
